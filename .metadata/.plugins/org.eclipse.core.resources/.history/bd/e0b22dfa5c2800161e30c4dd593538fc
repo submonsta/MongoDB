@@ -1,0 +1,18 @@
+package com.ktds.hskim.mongo.test;
+
+import org.springframework.data.mongodb.core.MongoTemplate;
+
+public class MongoTest {
+	
+	private MongoTemplate mongoTemplate;
+	
+	public MongoTest() {
+		
+	}
+	
+	public static void main(String[] args) {
+		MongoTest mongoTest = new MongoTest();
+	}
+	
+	
+}

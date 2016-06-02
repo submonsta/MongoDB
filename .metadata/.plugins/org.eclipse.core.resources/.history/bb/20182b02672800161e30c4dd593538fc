@@ -1,0 +1,109 @@
+package com.ktds.hskim.mongo.test;
+
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+
+public class MongoTest {
+	
+	private MongoTemplate mongoTemplate;
+	
+	public MongoTest() {
+		
+		String mongoContextPath = "/mongoContext.xml";
+		
+		AbstractApplicationContext ctx = new ClassPathXmlApplicationContext(mongoContextPath);
+		
+		mongoTemplate = (MongoTemplate) ctx.getBean("mongoTemplate");
+	}
+	
+	public static void main(String[] args) {
+		MongoTest mongoTest = new MongoTest();
+		
+		System.out.println(mongoTest.mongoTemplate);
+		
+		mongoTest.insertTestData();
+		mongoTest.insertAllTestData();
+		//mongoTest.removeAllDatas();
+	}
+	
+	private void insertTestData() {
+		MongoTestVO testVO = new MongoTestVO();
+		testVO.setName("둘리");
+		testVO.setAddress("고길동 집");
+		
+		mongoTemplate.insert(testVO);
+	}
+	
+	private void insertAllTestData() {
+		
+		List<MongoTestVO> testVOList = new ArrayList<MongoTestVO>();
+		MongoTestVO testVO = null;
+		
+		for(int i = 0; i < 10000; i++) {
+			testVO = new MongoTestVO();
+			testVO.setName("둘리" + i);
+			testVO.setAddress("고길동 집" + i + "번지");
+			testVOList.add(testVO);
+		}
+		
+		mongoTemplate.insertAll(testVOList);
+	}
+	
+	private void removeAllDatas() {
+		// 전체삭제
+		mongoTemplate.remove(new Query(), "person");
+	}
+	
+	private void removeData(String key, String value) {
+		Criteria criteria = new Criteria(key);
+		criteria.is(value);
+		
+		Query query = new Query(criteria);
+	}
+	
+	@Document(collection="person")
+	private class MongoTestVO {
+		
+		@Id
+		private String id;
+		
+		private String name;
+		private String address;
+		
+		public String getId() {
+			return id;
+		}
+		public void setId(String id) {
+			this.id = id;
+		}
+		public String getName() {
+			return name;
+		}
+		public void setName(String name) {
+			this.name = name;
+		}
+		public String getAddress() {
+			return address;
+		}
+		public void setAddress(String address) {
+			this.address = address;
+		}
+	}
+	
+}
+
+
+
+
+
+
+

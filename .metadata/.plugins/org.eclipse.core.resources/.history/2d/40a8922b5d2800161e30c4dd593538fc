@@ -1,0 +1,23 @@
+package com.ktds.hskim.mongo.test;
+
+import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.data.mongodb.core.MongoTemplate;
+
+public class MongoTest {
+	
+	private MongoTemplate mongoTemplate;
+	
+	public MongoTest() {
+		AbstractApplicationContext ctx = new ClassPathXmlApplicationContext();
+	}
+	
+	public static void main(String[] args) {
+		MongoTest mongoTest = new MongoTest();
+	}
+}
+
+
+
+
+

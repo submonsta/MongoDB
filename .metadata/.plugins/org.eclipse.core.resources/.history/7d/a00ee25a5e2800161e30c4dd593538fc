@@ -1,0 +1,32 @@
+package com.ktds.hskim.mongo.test;
+
+import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.data.mongodb.core.MongoTemplate;
+
+public class MongoTest {
+	
+	private MongoTemplate mongoTemplate;
+	
+	public MongoTest() {
+		
+		String mongoContextPath = "/mongoContext.xml";
+		
+		AbstractApplicationContext ctx = new ClassPathXmlApplicationContext(mongoContextPath);
+		
+		mongoTemplate = (MongoTemplate) ctx.getBean("mongoTemplate");
+	}
+	
+	public static void main(String[] args) {
+		MongoTest mongoTest = new MongoTest();
+		
+		System.out.println(mongoTest.mongoTemplate);
+	}
+}
+
+
+
+
+
+
+
